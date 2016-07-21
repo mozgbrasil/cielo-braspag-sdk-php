@@ -65,7 +65,7 @@ class ApiService
 
         $_array = $this->debugData;
 
-        \Zend\Debug\Debug::dump($_array);
+        //\Zend\Debug\Debug::dump($_array);
 
     }
 

@@ -260,6 +260,8 @@ $data = $dados_venda_completa;
 $data = $dados_venda_autenticada;
 $data = $dados_venda_analise_fraude;
 
+$data = $dados_venda_simplificada;
+
 
 $sale = new Sale($data);
 
@@ -314,16 +316,21 @@ if ($result->isValid()) {
     $payment = $result->getPayment();
 
     // Array do pagamento
-    $paymentArray = $result->getPayment()->toArray();
+    $paymentArray = $payment->toArray();
 
     // Cielo\Model\Customer
     $customer = $result->getCustomer();
 
     // Array do cliente
-    $customerArray = $result->getCustomer()->toArray();
+    $customerArray = $customer->toArray();
 
+    //\Zend\Debug\Debug::dump($payment);
+    //\Zend\Debug\Debug::dump($paymentArray);
+
+    if($payment->getFraudAnalysis()){
     // Resultado da analise de fraude
-    $fraudAnalysis = $result->getPayment()->getFraudAnalysis()->getReplyData();
+    $fraudAnalysis = $payment->getFraudAnalysis()->getReplyData();
+    }
 
     // Array do pedido completo
     $saleArray = $result->toArray();

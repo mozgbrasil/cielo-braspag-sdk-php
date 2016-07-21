@@ -150,6 +150,29 @@ class Payment extends AbstractModel
      */
     protected $interest;
 
+
+
+
+    /**
+     * @var int
+     */
+    protected $returnCode;
+
+    /**
+     * @var string
+     */
+    protected $returnMessage;
+
+    /**
+     * @var string
+     */
+    protected $tid;
+
+
+
+
+
+
     public function toArray()
     {
         return [
@@ -178,6 +201,9 @@ class Payment extends AbstractModel
             'authorizationCode' => $this->getAuthorizationCode(),
             'proofOfSale' => $this->getProofOfSale(),
             'acquirerTransactionId' => $this->getAcquirerTransactionId(),
+            'returnCode' => $this->getReturnCode(),
+            'returnMessage' => $this->getReturnMessage(),
+            'tid' => $this->getTid(),
         ];
     }
 
@@ -700,6 +726,68 @@ class Payment extends AbstractModel
     public function setInterest($interest)
     {
         $this->interest = $interest;
+        return $this;
+    }
+
+
+
+
+    /**
+     * @return int
+     */
+    public function getReturnCode()
+    {
+        return $this->returnCode;
+    }
+
+    /**
+     * @param int $reasonCode
+     * @return Payment
+     */
+    public function setReturnCode($returnCode)
+    {
+        if ($returnCode != 0) {
+
+        }
+
+        $this->returnCode = $returnCode;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getReturnMessage()
+    {
+        return $this->returnMessage;
+    }
+
+    /**
+     * @param string $reasonMessage
+     * @return Payment
+     */
+    public function setReturnMessage($returnMessage)
+    {
+        $this->returnMessage = $returnMessage;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTid()
+    {
+        return $this->tid;
+    }
+
+    /**
+     * @param string $reasonMessage
+     * @return Payment
+     */
+    public function setTid($tid)
+    {
+        $this->tid = $tid;
         return $this;
     }
 
