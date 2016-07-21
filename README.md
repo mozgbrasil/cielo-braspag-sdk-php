@@ -13,7 +13,7 @@ SDK de integração a Cielo e Braspag
 
 ## Instalação - Atualização - Desinstalação
 
-Este módulo destina-se a ser instalado usando o [Composer][composer].
+Esta biblioteca destina-se a ser instalado usando o [Composer][composer].
 
 Autoloading é [PSR-4][psr4] compatível.
 
@@ -34,14 +34,6 @@ Para atualizar o módulo execute o comando a seguir no terminal do seu servidor
 Para [desinstalar][uninstall-mods] o módulo execute o comando a seguir no terminal do seu servidor
 
     composer remove mozgbrasil/cielo-braspag-sdk-php && composer clear-cache && composer update
-
-## Contribuintes
-
-Equipe Mozg
-
-## License
-
-[Comercial License] (LICENSE.txt)
 
 ## Badges
 
