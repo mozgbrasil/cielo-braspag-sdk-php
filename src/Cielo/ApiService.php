@@ -67,8 +67,6 @@ class ApiService
 
         $this->debugData[] = __METHOD__;
 
-        //$arrSale = $this->capitalizeRequestData($sale->toArray());
-
         $method = 'POST';
         $uri = $this->config['apiUri'] . '/sales/';
         $options = [
@@ -107,6 +105,7 @@ class ApiService
 
         $this->debugData[] = __METHOD__;
 
+        /*
         if (!$paymentId) {
             throw new \InvalidArgumentException('$paymentId é obrigatório');
         }
@@ -143,6 +142,7 @@ class ApiService
         }
 
         return $captureResponse;
+        */
     }
 
     /**
@@ -155,6 +155,8 @@ class ApiService
     {
 
         $this->debugData[] = __METHOD__;
+
+        /*
 
         $uri = $this->config['apiUri'] . \sprintf('/sales/%s/void', $paymentId);
 
@@ -178,6 +180,8 @@ class ApiService
         }
 
         return $voidResponse;
+
+        */
     }
 
     /**
@@ -189,6 +193,8 @@ class ApiService
     {
 
         $this->debugData[] = __METHOD__;
+
+        /*
 
         try {
             $uri = $this->config['apiQueryUri'] . \sprintf('/sales/%s', $paymentId);
@@ -209,6 +215,8 @@ class ApiService
         } catch (\Exception $e) {
 
         }
+
+        */
 
     }
 
