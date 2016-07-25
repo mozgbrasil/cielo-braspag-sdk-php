@@ -384,8 +384,8 @@ $parameters = $dados_venda_completa_boleto;
 
 //
 
-$service = $service_sandbox_cielo;
-$parameters = $dados_venda_simplificada_boleto;
+$service = $service_sandbox_braspag;
+$parameters = $dados_venda_completa_boleto;
 
 //
 
@@ -393,12 +393,15 @@ $response = $service->authorize($parameters);
 
 echo '<h2>request</h2>';
 //\Zend\Debug\Debug::dump($service);
+echo '<h2>array</h2>';
 \Zend\Debug\Debug::dump($parameters);
+echo '<h2>json</h2>';
+\Zend\Debug\Debug::dump(\json_encode($parameters));
 
 echo '<h2>response</h2>';
 
 // isValid
-if (array_key_exists("Volvo",$response)) {
+if (array_key_exists('Payment',$response)) {
 
 
 
