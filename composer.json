@@ -50,7 +50,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Cielo\\": "src/Cielo/"
+            "Mozg\\Cielo\\": "src/Cielo/"
         }
     }
 }

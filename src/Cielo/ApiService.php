@@ -5,21 +5,13 @@
  * See LICENSE.txt for license details.
  */
 
-namespace Cielo;
+namespace Mozg\Cielo;
 
-use Cielo\Model\Sale\Sale;
-use Cielo\Model\Sale\CaptureRequest;
-use Cielo\Model\Sale\CaptureResponse;
-use Cielo\Model\Sale\VoidResponse;
-use Cielo\Model\HttpStatus;
-use Cielo\Lib\Hydrator;
-use Cielo\Lib\Util;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Client as HttpClient;
 
 class ApiService
 {
-    use Util;
 
     /**
      * @var array
@@ -45,11 +37,7 @@ class ApiService
 
         $this->debugData[] = __METHOD__;
 
-        $this->config = include __DIR__ . '/../../config/cielo.config.php';
-
-        if (\is_array($options)) {
-            $this->config = \array_merge($this->config, $options);
-        }
+        $this->config = $options;
 
         $this->headers = array(
             'MerchantId' => $this->config['merchantId'],
@@ -70,22 +58,27 @@ class ApiService
     }
 
     /**
-     * @param Sale $sale
-     * @return Sale
+     * @param -
+     * @return -
      * @throws \Exception
      */
-    public function authorize(Sale $sale)
+    public function authorize($parameters)
     {
 
         $this->debugData[] = __METHOD__;
 
-        $arrSale = $this->capitalizeRequestData($sale->toArray());
+        //$arrSale = $this->capitalizeRequestData($sale->toArray());
+
+        $method = 'POST';
+        $uri = $this->config['apiUri'] . '/sales/';
+        $options = [
+            'body' => \json_encode($parameters),
+            'headers' => $this->headers
+        ];
 
         try {
-            $response = $this->http()->request('POST', $this->config['apiUri'] . '/sales/', [
-                'body' => \json_encode($arrSale),
-                'headers' => $this->headers
-            ]);
+
+            $response = $this->http()->request($method, $uri, $options);
 
             $this->debugData[][__LINE__]['response'] = $response;
 
@@ -93,19 +86,14 @@ class ApiService
 
             $this->debugData[][__LINE__]['result'] = $result;
 
-            Hydrator::hydrate($sale, $result);
-
         } catch (RequestException $e) {
-            //$sale->setMessages(\json_decode($e->getResponse()->getBody()->getContents()));
+
+            $result = array('code'=>$e->getCode(),'message'=>$e->getMessage());
 
             $this->debugData[][__LINE__]['exception'] = $e->getMessage();
-
-            $sale->setMessages(array(array('code'=>$e->getCode(),'message'=>$e->getMessage())));
         }
 
-        $this->debugData[][__LINE__]['sale'] = $sale;
-
-        return $sale;
+        return $result;
     }
 
     /**
