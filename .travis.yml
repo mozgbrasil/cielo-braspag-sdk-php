@@ -1,28 +1,35 @@
+sudo: required
+dist: trusty
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+    - postfix
 language: php
-
-# list any PHP version you want to test against
 php:
-  # using major version aliases
-  
-  # aliased to 5.2.17
-  - 5.2
-  # aliased to a recent 5.3.x version
-  - 5.3
-  # aliased to a recent 5.4.x version
-  - 5.4
-  # aliased to a recent 5.5.x version
-  - 5.5
-  # aliased to a recent 5.6.x version
-  - 5.6
-
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - hhvm
+  - nightly
 env:
+  global:
+    - COMPOSER_BIN_DIR=~/bin
+    - INTEGRATION_SETS=3
+  matrix:
+    - TEST_SUITE=unit
+    - TEST_SUITE=integration INTEGRATION_INDEX=1
+    - TEST_SUITE=integration INTEGRATION_INDEX=2
+    - TEST_SUITE=integration INTEGRATION_INDEX=3
+    - TEST_SUITE=static
+cache:
+  apt: true
+  directories: $HOME/.composer/cache
+matrix:
+  exclude:
+    - php: 7.0
+      env: TEST_SUITE=static
 
-before_script: 
-  - wget -nc http://getcomposer.org/composer.phar
-  - php composer.phar update
-
-script: phpunit
-
-notifications:
-  email:
-    - suporte@mozg.com.br

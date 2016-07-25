@@ -384,12 +384,72 @@ $parameters = $dados_venda_completa_boleto;
 
 //
 
-$service = $service_sandbox_braspag;
-$parameters = $dados_venda_completa_boleto;
+$service = $service_sandbox_cielo;
+$parameters = $dados_venda_simplificada_credito;
+
+if (isset($_REQUEST['service']) && $_REQUEST['service'] != '') {
+    $service = ${$_REQUEST['service']};    
+}
+
+if (isset($_REQUEST['parameters']) && $_REQUEST['parameters'] != '') {
+    $parameters = ${$_REQUEST['parameters']};    
+}
+
 
 //
 
 $response = $service->authorize($parameters);
+
+//
+
+$html = <<<EOF
+<table border="1">
+<tr>
+<td><h1>Cielo</h1></td>
+<td><h1>Braspag</h1></td>
+</tr>
+<tr>
+<td>
+
+<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_simplificada_credito">service_sandbox_cielo -> dados_venda_simplificada_credito</a></p>
+
+<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+
+<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_autenticada_credito">service_sandbox_cielo -> dados_venda_autenticada_credito</a></p>
+
+<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_analise_fraude_credito">service_sandbox_cielo -> dados_venda_analise_fraude_credito</a></p>
+
+<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_simplificada_debito">service_sandbox_cielo -> dados_venda_simplificada_debito</a></p>
+
+<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_simplificada_boleto">service_sandbox_cielo -> dados_venda_simplificada_boleto</a></p>
+
+<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_completa_boleto">service_sandbox_cielo -> dados_venda_completa_boleto</a></p>
+
+</td>
+<td>
+
+<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_simplificada_credito">service_sandbox_braspag -> dados_venda_simplificada_credito</a></p>
+
+<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+
+<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_autenticada_credito">service_sandbox_braspag -> dados_venda_autenticada_credito</a></p>
+
+<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_analise_fraude_credito">service_sandbox_braspag -> dados_venda_analise_fraude_credito</a></p>
+
+<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_simplificada_debito">service_sandbox_braspag -> dados_venda_simplificada_debito</a></p>
+
+<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_simplificada_boleto">service_sandbox_braspag -> dados_venda_simplificada_boleto</a></p>
+
+<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_completa_boleto">service_sandbox_braspag -> dados_venda_completa_boleto</a></p>
+
+</td>
+</tr>
+</table>
+EOF;
+
+echo $html;
+
+//
 
 echo '<h2>request</h2>';
 //\Zend\Debug\Debug::dump($service);
