@@ -34,6 +34,55 @@ function generateGuid(){
 
 //
 
+$html = <<<EOF
+<table border="1">
+<tr>
+<td><h1>Cielo</h1></td>
+<td><h1>Braspag</h1></td>
+</tr>
+<tr>
+<td>
+
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_credito">service_sandbox_cielo -> dados_venda_simplificada_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_autenticada_credito">service_sandbox_cielo -> dados_venda_autenticada_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_analise_fraude_credito">service_sandbox_cielo -> dados_venda_analise_fraude_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_debito">service_sandbox_cielo -> dados_venda_simplificada_debito</a></p>
+
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_boleto">service_sandbox_cielo -> dados_venda_simplificada_boleto</a></p>
+
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_boleto">service_sandbox_cielo -> dados_venda_completa_boleto</a></p>
+
+</td>
+<td>
+
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_credito">service_sandbox_braspag -> dados_venda_simplificada_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_autenticada_credito">service_sandbox_braspag -> dados_venda_autenticada_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_analise_fraude_credito">service_sandbox_braspag -> dados_venda_analise_fraude_credito</a></p>
+
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_debito">service_sandbox_braspag -> dados_venda_simplificada_debito</a></p>
+
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_boleto">service_sandbox_braspag -> dados_venda_simplificada_boleto</a></p>
+
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_boleto">service_sandbox_braspag -> dados_venda_completa_boleto</a></p>
+
+</td>
+</tr>
+</table>
+EOF;
+
+echo $html;
+
+//
+
 $service_production_braspag = [
     'headers' => [
         'MerchantId' => '1985000c-22f7-4429-9a92-fa5cb27de0e0',
@@ -430,55 +479,6 @@ echo '<h2>authorize</h2>';
 
 $service = new ApiService($service_options);
 $response = $service->authorize($parameters);
-
-//
-
-$html = <<<EOF
-<table border="1">
-<tr>
-<td><h1>Cielo</h1></td>
-<td><h1>Braspag</h1></td>
-</tr>
-<tr>
-<td>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_credito">service_sandbox_cielo -> dados_venda_simplificada_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_autenticada_credito">service_sandbox_cielo -> dados_venda_autenticada_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_analise_fraude_credito">service_sandbox_cielo -> dados_venda_analise_fraude_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_debito">service_sandbox_cielo -> dados_venda_simplificada_debito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_boleto">service_sandbox_cielo -> dados_venda_simplificada_boleto</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_boleto">service_sandbox_cielo -> dados_venda_completa_boleto</a></p>
-
-</td>
-<td>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_credito">service_sandbox_braspag -> dados_venda_simplificada_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_autenticada_credito">service_sandbox_braspag -> dados_venda_autenticada_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_analise_fraude_credito">service_sandbox_braspag -> dados_venda_analise_fraude_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_debito">service_sandbox_braspag -> dados_venda_simplificada_debito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_boleto">service_sandbox_braspag -> dados_venda_simplificada_boleto</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_boleto">service_sandbox_braspag -> dados_venda_completa_boleto</a></p>
-
-</td>
-</tr>
-</table>
-EOF;
-
-echo $html;
 
 //
 
