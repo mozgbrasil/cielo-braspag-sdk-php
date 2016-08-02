@@ -10,6 +10,14 @@ namespace Mozg\Cielo;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Client as HttpClient;
 
+class HttpStatus
+{
+    const Ok = 200;
+    const Created = 201;
+    const BadRequest = 400;
+    const NotFound = 404;
+}
+
 class ApiService
 {
 
@@ -39,11 +47,7 @@ class ApiService
 
         $this->config = $options;
 
-        $this->headers = array(
-            'MerchantId' => $this->config['merchantId'],
-            'MerchantKey' => $this->config['merchantKey'],
-            'Content-Type' => 'application/json;charset=UTF-8'
-        );
+        $this->headers = $this->config['headers'];
     }
 
     public function __destruct()
@@ -86,7 +90,10 @@ class ApiService
 
         } catch (RequestException $e) {
 
-            $result = array('code'=>$e->getCode(),'message'=>$e->getMessage());
+            $result = array(
+                'code'=>$e->getCode(),
+                'message'=>$e->getMessage()
+                );
 
             $this->debugData[][__LINE__]['exception'] = $e->getMessage();
         }
@@ -95,34 +102,80 @@ class ApiService
     }
 
     /**
-     * Captures a pre-authorized payment
+     * Gets a sale
      * @param string $paymentId
-     * @param CaptureRequest $captureRequest
      * @return mixed
      */
-    public function capture($paymentId, CaptureRequest $captureRequest)
+    public function get($paymentId)
     {
 
         $this->debugData[] = __METHOD__;
 
-        /*
+        $method = 'GET';
+        $uri = $this->config['apiQueryUri'] . \sprintf('/sales/%s', $paymentId);
+        $options = [
+            'headers' => $this->headers
+        ];
+
+        try {
+
+            $response = $this->http()->request($method, $uri, $options);
+
+            $this->debugData[][__LINE__]['response'] = $response;
+
+            $result = \json_decode($response->getBody()->getContents(), true);            
+
+            if ($response->getStatusCode() === HttpStatus::Ok) {
+                return $result;
+            } elseif ($response->getStatusCode() == HttpStatus::BadRequest) {
+                return 'status_codex';
+            }
+
+        } catch (\Exception $e) {
+
+            $result = array(
+                'code'=>$e->getCode(),
+                'message'=>$e->getMessage()
+                );
+
+            $this->debugData[][__LINE__]['exception'] = $e->getMessage();
+
+        }
+
+        return $result;
+    }
+
+    /**
+     * Captures a pre-authorized payment
+     * @param string $paymentId
+     * @param array $captureRequest
+     * @return mixed
+     */
+    public function capture($paymentId, $captureRequest)
+    {
+
+        $this->debugData[] = __METHOD__;
+
+        
         if (!$paymentId) {
             throw new \InvalidArgumentException('$paymentId é obrigatório');
         }
 
+        $method = 'PUT';
         $uri = $this->config['apiUri'] . \sprintf('/sales/%s/capture', $paymentId);
+        $options = [
+            'headers' => $this->headers
+        ];
+        
         if ($captureRequest) {
-            $uri .= '?' . \http_build_query($captureRequest->toArray());
+            $uri .= '?' . \http_build_query($captureRequest);
         }
 
-        $captureResponse = new CaptureResponse();
-
-        $this->debugData[][__LINE__]['captureResponse'] = $captureResponse;
+        $this->debugData[][__LINE__]['uri'] = $uri;
 
         try {
-            $response = $this->http()->request('PUT', $uri, [
-                'headers' => $this->headers
-            ]);
+
+            $response = $this->http()->request($method, $uri, $options);
 
             $this->debugData[][__LINE__]['response'] = $response;
 
@@ -130,19 +183,18 @@ class ApiService
 
             $this->debugData[][__LINE__]['result'] = $result;
 
-            Hydrator::hydrate($captureResponse, $result);
-
         } catch (RequestException $e) {
-            //$captureResponse->setMessages(\json_decode($e->getResponse()->getBody()->getContents(), true));
+
+            $result = array(
+                'code'=>$e->getCode(),
+                'message'=>$e->getMessage()
+                );
 
             $this->debugData[][__LINE__]['exception'] = $e->getMessage();
 
-            $captureResponse->setMessages(array(array('code'=>$e->getCode(),'message'=>$e->getMessage())));
-
         }
 
-        return $captureResponse;
-        */
+        return $result;
     }
 
     /**
@@ -156,68 +208,41 @@ class ApiService
 
         $this->debugData[] = __METHOD__;
 
-        /*
-
+        $method = 'PUT';
         $uri = $this->config['apiUri'] . \sprintf('/sales/%s/void', $paymentId);
+        $options = [
+            'headers' => $this->headers
+        ];
 
         if ($amount) {
-            $uri .= sprintf('?amount=%f', (float)$amount);
+            $uri .= sprintf('?amount=%s', (float)$amount);
         }
 
-        $voidResponse = new VoidResponse();
+        //\Zend\Debug\Debug::dump($uri);
+        //exit;
 
         try {
-            $response = $this->http()->request('PUT', $uri, [
-                'headers' => $this->headers
-            ]);
+
+            $response = $this->http()->request($method, $uri, $options);
+
+            $this->debugData[][__LINE__]['response'] = $response;
 
             $result = \json_decode($response->getBody()->getContents(), true);
 
-            Hydrator::hydrate($voidResponse, $result);
+            $this->debugData[][__LINE__]['result'] = $result;
 
         } catch (RequestException $e) {
-            $voidResponse->setMessages(\json_decode($e->getResponse()->getBody()->getContents(), true));
-        }
 
-        return $voidResponse;
+            $result = array(
+                'code'=>$e->getCode(),
+                'message'=>$e->getMessage()
+                );
 
-        */
-    }
-
-    /**
-     * Gets a sale
-     * @param string $paymentId
-     * @return mixed
-     */
-    public function get($paymentId)
-    {
-
-        $this->debugData[] = __METHOD__;
-
-        /*
-
-        try {
-            $uri = $this->config['apiQueryUri'] . \sprintf('/sales/%s', $paymentId);
-
-            $response = $this->http()->request('GET', $uri, [
-                'headers' => $this->headers
-            ]);
-
-            $result = \json_decode($response->getBody()->getContents(), true);
-
-            if ($response->getStatusCode() === HttpStatus::Ok) {
-                $sale = new Sale($result);
-                return $sale;
-            } elseif ($response->getStatusCode() == HttpStatus::BadRequest) {
-                return CieloUtils::getBadRequestErros($response->body);
-            }
-
-        } catch (\Exception $e) {
+            $this->debugData[][__LINE__]['exception'] = $e->getMessage();
 
         }
 
-        */
-
+        return $result;
     }
 
     /**
