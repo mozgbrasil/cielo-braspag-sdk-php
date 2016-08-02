@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2015 Mozg. All rights reserved.
+ * Copyright © 2016 Mozg. All rights reserved.
  * See LICENSE.txt for license details.
  */
 
@@ -25,42 +25,57 @@ use Mozg\Cielo\ApiService;
 
 //
 
-$service_production_braspag = new ApiService([
+function generateGuid(){
+    $hash = strtoupper(hash('ripemd128', uniqid('', true) . md5(time() . rand(0, time()))));
+    $guid = ''.substr($hash,  0,  8).'-'.substr($hash,  8,  4).'-'.substr($hash, 12,  4).'-'.substr($hash, 16,  4).'-'.substr($hash, 20, 12).'';
+
+    return $guid;
+}
+
+//
+
+$service_production_braspag = [
+    'headers' => [
+        'MerchantId' => '1985000c-22f7-4429-9a92-fa5cb27de0e0',
+        'MerchantKey' => 'VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS',
+        'Content-Type' => 'application/json;charset=UTF-8'
+    ],
     'apiUri' => 'https://api.braspag.com.br/v2',
     'apiQueryUri' => 'https://apiquery.braspag.com.br/v2',
-    'merchantId' => '1985000c-22f7-4429-9a92-fa5cb27de0e0',
-    'merchantKey' => 'VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS',
-]);
+];
 
-$service_sandbox_braspag = new ApiService([
+$service_sandbox_braspag = [
+    'headers' => [
+        'MerchantId' => '1985000c-22f7-4429-9a92-fa5cb27de0e0',
+        'MerchantKey' => 'VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS',
+        'Content-Type' => 'application/json;charset=UTF-8'
+    ],
     'apiUri' => 'https://apisandbox.braspag.com.br/v2',
     'apiQueryUri' => 'https://apiquerysandbox.braspag.com.br/v2',
-    'merchantId' => '1985000c-22f7-4429-9a92-fa5cb27de0e0',
-    'merchantKey' => 'VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS',
-]);
+];
 
 
-$service_production_cielo = new ApiService([
+$service_production_cielo = [
+    'headers' => [
+        'MerchantId' => 'a2133427-a0f8-4fe8-b605-6469161e7711',
+        'MerchantKey' => 'XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC',
+        'RequestId' => generateGuid(),
+        'Content-Type' => 'application/json;charset=UTF-8'
+    ],
     'apiUri' => 'https://api.cieloecommerce.cielo.com.br/1',
     'apiQueryUri' => 'https://apiquery.cieloecommerce.cielo.com.br/1',
-    'merchantId' => 'a2133427-a0f8-4fe8-b605-6469161e7711',
-    'merchantKey' => 'XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC',
-]);
+];
 
-$service_sandbox_cielo = new ApiService([
+$service_sandbox_cielo = [
+    'headers' => [
+        'MerchantId' => 'a2133427-a0f8-4fe8-b605-6469161e7711',
+        'MerchantKey' => 'XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC',
+        'RequestId' => generateGuid(),
+        'Content-Type' => 'application/json;charset=UTF-8'
+    ],
     'apiUri' => 'https://apisandbox.cieloecommerce.cielo.com.br/1',
     'apiQueryUri' => 'https://apiquerysandbox.cieloecommerce.cielo.com.br/1',
-    'merchantId' => 'a2133427-a0f8-4fe8-b605-6469161e7711',
-    'merchantKey' => 'XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC',
-]);
-
-$service_test_ = new ApiService([
-    'apiUri' => 'https://api.braspag.com.br/v2',
-    'apiQueryUri' => 'https://apiquery.braspag.com.br/v2',
-    'merchantId' => '00000000-0000-0000-0000-000000000000',
-    'merchantKey' => '0000000000000000000000000000000000000000',
-    'authenticate' => true
-]);
+];
 
 //
 
@@ -367,10 +382,10 @@ $dados_venda_completa_boleto = [
 
 //
 
-$service = $service_production_braspag;
-$service = $service_sandbox_braspag;
-$service = $service_production_cielo;
-$service = $service_sandbox_cielo;
+$service_options = $service_production_braspag;
+$service_options = $service_sandbox_braspag;
+$service_options = $service_production_cielo;
+$service_options = $service_sandbox_cielo;
 
 //
 
@@ -387,17 +402,33 @@ $parameters = $dados_venda_completa_boleto;
 $service = $service_sandbox_cielo;
 $parameters = $dados_venda_simplificada_credito;
 
-if (isset($_REQUEST['service']) && $_REQUEST['service'] != '') {
-    $service = ${$_REQUEST['service']};    
+if (isset($_REQUEST['service_options']) && $_REQUEST['service_options'] != '') {
+    $service_options = ${$_REQUEST['service_options']};    
 }
 
 if (isset($_REQUEST['parameters']) && $_REQUEST['parameters'] != '') {
     $parameters = ${$_REQUEST['parameters']};    
 }
 
+/*
+\Zend\Debug\Debug::dump($_REQUEST['service']);
+\Zend\Debug\Debug::dump(${$_REQUEST['service']});
+\Zend\Debug\Debug::dump($service);
+*/
+
 
 //
 
+echo '<h2>request</h2>';
+//\Zend\Debug\Debug::dump($service);
+echo '<h2>array</h2>';
+\Zend\Debug\Debug::dump($parameters);
+echo '<h2>json</h2>';
+\Zend\Debug\Debug::dump(\json_encode($parameters));
+
+echo '<h2>authorize</h2>';
+
+$service = new ApiService($service_options);
 $response = $service->authorize($parameters);
 
 //
@@ -411,36 +442,36 @@ $html = <<<EOF
 <tr>
 <td>
 
-<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_simplificada_credito">service_sandbox_cielo -> dados_venda_simplificada_credito</a></p>
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_credito">service_sandbox_cielo -> dados_venda_simplificada_credito</a></p>
 
-<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
 
-<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_autenticada_credito">service_sandbox_cielo -> dados_venda_autenticada_credito</a></p>
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_autenticada_credito">service_sandbox_cielo -> dados_venda_autenticada_credito</a></p>
 
-<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_analise_fraude_credito">service_sandbox_cielo -> dados_venda_analise_fraude_credito</a></p>
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_analise_fraude_credito">service_sandbox_cielo -> dados_venda_analise_fraude_credito</a></p>
 
-<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_simplificada_debito">service_sandbox_cielo -> dados_venda_simplificada_debito</a></p>
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_debito">service_sandbox_cielo -> dados_venda_simplificada_debito</a></p>
 
-<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_simplificada_boleto">service_sandbox_cielo -> dados_venda_simplificada_boleto</a></p>
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_boleto">service_sandbox_cielo -> dados_venda_simplificada_boleto</a></p>
 
-<p><a href="?service=service_sandbox_cielo&parameters=dados_venda_completa_boleto">service_sandbox_cielo -> dados_venda_completa_boleto</a></p>
+<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_boleto">service_sandbox_cielo -> dados_venda_completa_boleto</a></p>
 
 </td>
 <td>
 
-<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_simplificada_credito">service_sandbox_braspag -> dados_venda_simplificada_credito</a></p>
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_credito">service_sandbox_braspag -> dados_venda_simplificada_credito</a></p>
 
-<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
 
-<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_autenticada_credito">service_sandbox_braspag -> dados_venda_autenticada_credito</a></p>
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_autenticada_credito">service_sandbox_braspag -> dados_venda_autenticada_credito</a></p>
 
-<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_analise_fraude_credito">service_sandbox_braspag -> dados_venda_analise_fraude_credito</a></p>
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_analise_fraude_credito">service_sandbox_braspag -> dados_venda_analise_fraude_credito</a></p>
 
-<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_simplificada_debito">service_sandbox_braspag -> dados_venda_simplificada_debito</a></p>
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_debito">service_sandbox_braspag -> dados_venda_simplificada_debito</a></p>
 
-<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_simplificada_boleto">service_sandbox_braspag -> dados_venda_simplificada_boleto</a></p>
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_boleto">service_sandbox_braspag -> dados_venda_simplificada_boleto</a></p>
 
-<p><a href="?service=service_sandbox_braspag&parameters=dados_venda_completa_boleto">service_sandbox_braspag -> dados_venda_completa_boleto</a></p>
+<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_boleto">service_sandbox_braspag -> dados_venda_completa_boleto</a></p>
 
 </td>
 </tr>
@@ -451,13 +482,6 @@ echo $html;
 
 //
 
-echo '<h2>request</h2>';
-//\Zend\Debug\Debug::dump($service);
-echo '<h2>array</h2>';
-\Zend\Debug\Debug::dump($parameters);
-echo '<h2>json</h2>';
-\Zend\Debug\Debug::dump(\json_encode($parameters));
-
 echo '<h2>response</h2>';
 
 // isValid
@@ -467,6 +491,44 @@ if (array_key_exists('Payment',$response)) {
 
     echo '<h2>isValid</h2>';
     \Zend\Debug\Debug::dump($response);
+
+    $_pspReference = $response['Payment']['PaymentId'];
+    $_self = $response['Payment']['Links'][0]['Href'];
+    $amount = 100;
+    $captureRequest = [
+        'amount' => $amount,
+        'serviceTaxAmount' => 0
+    ];
+
+
+    \Zend\Debug\Debug::dump($_pspReference);
+    \Zend\Debug\Debug::dump($_self);
+
+    //
+
+    echo '<h2>Consulta</h2>';
+
+    $response = $service->get($_pspReference);
+
+    \Zend\Debug\Debug::dump($response);
+
+    //
+
+    echo '<h2>Captura</h2>';
+
+    $response = $service->capture($_pspReference, $captureRequest);
+
+    \Zend\Debug\Debug::dump($response);
+
+    //
+
+    echo '<h2>Cancela</h2>';
+
+    $response = $service->void($_pspReference, $amount);
+
+    \Zend\Debug\Debug::dump($response);
+
+    //
 
     /*
     if($response['payment']['returnCode'] == 6){
@@ -487,6 +549,26 @@ if (array_key_exists('Payment',$response)) {
  curl --request POST "https://apisandbox.braspag.com.br/v2/sales/" --header "Content-Type: application/json" --header "MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0" --header "MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{ "MerchantOrderId":"2014111703", "Customer":{ "Name":"Comprador Teste" }, "Payment":{ "Type":"CreditCard", "Amount":15700, "Provider":"Simulado", "Installments":1, "CreditCard":{ "CardNumber":"1234123412341231", "Holder":"Teste Holder", "ExpirationDate":"12/2021", "SecurityCode":"123", "Brand":"Visa" } } }' --verbose
 
 
- curl --request POST "https://apisandbox.cieloecommerce.cielo.com.br/1/sales/" --header "Content-Type: application/json" --header "MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711" --header "MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{   "MerchantOrderId":"2014111706", "Customer": {   "Name":"Comprador Teste" }, "Payment": {   "Type":"Boleto", "Amount":15700, "Provider":"Bradesco" } }' --verbose 
+ curl --request POST "https://apisandbox.cieloecommerce.cielo.com.br/1/sales/" --header "Content-Type: application/json" --header "MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711" --header "MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{  
+   "MerchantOrderId":"2014111903",
+   "Customer":{  
+      "Name":"Comprador Teste"
+   },
+   "Payment":{  
+      "Type":"CreditCard",
+      "Amount":15700,
+      "Installments":1,
+      "Authenticate":true,
+      "ReturnUrl":"http://www.cielo.com.br",
+      "SoftDescriptor":"tst",
+      "CreditCard":{  
+         "CardNumber":"4551870000000183",
+         "Holder":"Teste Holder",
+         "ExpirationDate":"12/2015",
+         "SecurityCode":"123",
+         "Brand":"Visa"
+      }
+   }
+}' --verbose
 
 */
