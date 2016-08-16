@@ -34,6 +34,34 @@ function generateGuid(){
 
 //
 
+$parameters_cielo = '';
+$parameters_braspag = '';
+
+if (isset($_REQUEST['service_options']) && $_REQUEST['service_options'] != '') {
+    $service_options = $_REQUEST['service_options'];
+
+    $parameters = <<<EOF
+
+<p><a href="?service_options=$service_options&parameters=dados_venda_simplificada_credito"> dados_venda_simplificada_credito</a></p>
+
+<p><a href="?service_options=$service_options&parameters=dados_venda_completa_credito">dados_venda_completa_credito</a></p>
+
+<p><a href="?service_options=$service_options&parameters=dados_venda_autenticada_credito">dados_venda_autenticada_credito</a></p>
+
+<p><a href="?service_options=$service_options&parameters=dados_venda_analise_fraude_credito">dados_venda_analise_fraude_credito</a></p>
+
+<p><a href="?service_options=$service_options&parameters=dados_venda_simplificada_debito">dados_venda_simplificada_debito</a></p>
+
+<p><a href="?service_options=$service_options&parameters=dados_venda_simplificada_boleto">dados_venda_simplificada_boleto</a></p>
+
+<p><a href="?service_options=$service_options&parameters=dados_venda_completa_boleto">dados_venda_completa_boleto</a></p>
+
+EOF;
+
+}
+
+
+
 $html = <<<EOF
 <table border="1">
 <tr>
@@ -43,36 +71,20 @@ $html = <<<EOF
 <tr>
 <td>
 
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_credito">service_sandbox_cielo -> dados_venda_simplificada_credito</a></p>
+<p><a href="?service_options=service_sandbox_cielo">service_sandbox_cielo</a></p>
 
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+<p><a href="?service_options=service_production_cielo">service_production_cielo</a></p>
 
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_autenticada_credito">service_sandbox_cielo -> dados_venda_autenticada_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_analise_fraude_credito">service_sandbox_cielo -> dados_venda_analise_fraude_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_debito">service_sandbox_cielo -> dados_venda_simplificada_debito</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_simplificada_boleto">service_sandbox_cielo -> dados_venda_simplificada_boleto</a></p>
-
-<p><a href="?service_options=service_sandbox_cielo&parameters=dados_venda_completa_boleto">service_sandbox_cielo -> dados_venda_completa_boleto</a></p>
+$parameters
 
 </td>
 <td>
 
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_credito">service_sandbox_braspag -> dados_venda_simplificada_credito</a></p>
+<p><a href="?service_options=service_sandbox_braspag">service_sandbox_braspag</a></p>
 
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_credito">service_sandbox_cielo -> dados_venda_completa_credito</a></p>
+<p><a href="?service_options=service_production_braspag">service_production_braspag</a></p>
 
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_autenticada_credito">service_sandbox_braspag -> dados_venda_autenticada_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_analise_fraude_credito">service_sandbox_braspag -> dados_venda_analise_fraude_credito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_debito">service_sandbox_braspag -> dados_venda_simplificada_debito</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_simplificada_boleto">service_sandbox_braspag -> dados_venda_simplificada_boleto</a></p>
-
-<p><a href="?service_options=service_sandbox_braspag&parameters=dados_venda_completa_boleto">service_sandbox_braspag -> dados_venda_completa_boleto</a></p>
+$parameters
 
 </td>
 </tr>
@@ -138,7 +150,7 @@ $dados_venda_simplificada_credito = [
     'payment' => [
         'type' => 'CreditCard',
         'amount' => 100,
-        'provider' => 'Simulado',
+        'provider' => 'Cielo',
         'installments' => 1,
         'creditCard' => [
             'cardNumber' => '4532117080573700',
@@ -184,7 +196,7 @@ $dados_venda_completa_credito = [
         'amount' => 100,
         'currency' => 'BRL',
         'country' => 'BRA',
-        'provider' => 'Simulado',
+        'provider' => 'Cielo',
         'serviceTaxAmount' => 0,
         'installments' => 1,
         'interest' => 'ByMerchant',
@@ -216,7 +228,7 @@ $dados_venda_autenticada_credito = [
     'payment' => [
         'type' => 'CreditCard',
         'amount' => 100,
-        'provider' => 'Simulado',
+        'provider' => 'Cielo',
         'installments' => 1,
         'authenticate' => true,
         'returnUrl' => 'http://www.braspag.com.br/',
@@ -264,7 +276,7 @@ $dados_venda_analise_fraude_credito = [
         'amount' => 100,
         'currency' => 'BRL',
         'country' => 'BRA',
-        'provider' => 'Simulado',
+        'provider' => 'Cielo',
         'serviceTaxAmount' => 0,
         'installments' => 1,
         'interest' => 'ByMerchant',
@@ -546,7 +558,7 @@ if (array_key_exists('Payment',$response)) {
 
 /*
 
- curl --request POST "https://apisandbox.braspag.com.br/v2/sales/" --header "Content-Type: application/json" --header "MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0" --header "MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{ "MerchantOrderId":"2014111703", "Customer":{ "Name":"Comprador Teste" }, "Payment":{ "Type":"CreditCard", "Amount":15700, "Provider":"Simulado", "Installments":1, "CreditCard":{ "CardNumber":"1234123412341231", "Holder":"Teste Holder", "ExpirationDate":"12/2021", "SecurityCode":"123", "Brand":"Visa" } } }' --verbose
+ curl --request POST "https://apisandbox.braspag.com.br/v2/sales/" --header "Content-Type: application/json" --header "MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0" --header "MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{ "MerchantOrderId":"2014111703", "Customer":{ "Name":"Comprador Teste" }, "Payment":{ "Type":"CreditCard", "Amount":15700, "Provider":"Cielo", "Installments":1, "CreditCard":{ "CardNumber":"1234123412341231", "Holder":"Teste Holder", "ExpirationDate":"12/2021", "SecurityCode":"123", "Brand":"Visa" } } }' --verbose
 
 
  curl --request POST "https://apisandbox.cieloecommerce.cielo.com.br/1/sales/" --header "Content-Type: application/json" --header "MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711" --header "MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{  

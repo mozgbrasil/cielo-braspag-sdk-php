@@ -78,6 +78,10 @@ class ApiService
             'headers' => $this->headers
         ];
 
+        $this->debugData[][__LINE__]['method'] = $method;
+        $this->debugData[][__LINE__]['uri'] = $uri;
+        $this->debugData[][__LINE__]['options'] = $uri;
+
         try {
 
             $response = $this->http()->request($method, $uri, $options);
@@ -116,6 +120,10 @@ class ApiService
         $options = [
             'headers' => $this->headers
         ];
+
+        $this->debugData[][__LINE__]['method'] = $method;
+        $this->debugData[][__LINE__]['uri'] = $uri;
+        $this->debugData[][__LINE__]['options'] = $uri;
 
         try {
 
@@ -171,7 +179,9 @@ class ApiService
             $uri .= '?' . \http_build_query($captureRequest);
         }
 
+        $this->debugData[][__LINE__]['method'] = $method;
         $this->debugData[][__LINE__]['uri'] = $uri;
+        $this->debugData[][__LINE__]['options'] = $uri;
 
         try {
 
@@ -218,8 +228,9 @@ class ApiService
             $uri .= sprintf('?amount=%s', (float)$amount);
         }
 
-        //\Zend\Debug\Debug::dump($uri);
-        //exit;
+        $this->debugData[][__LINE__]['method'] = $method;
+        $this->debugData[][__LINE__]['uri'] = $uri;
+        $this->debugData[][__LINE__]['options'] = $uri;
 
         try {
 
