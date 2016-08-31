@@ -1,8 +1,8 @@
 ![valid XHTML][checkmark]
 [checkmark]: https://raw.githubusercontent.com/mozgbrasil/mozgbrasil.github.io/master/assets/images/logos/Red_star_32_32.png "MOZG"
-[composer]: https://packagist.org/packages/mozgbrasil/cielo-braspag-sdk-php
 [psr4]: http://www.php-fig.org/psr/psr-4/
 [requirements]: http://mozgbrasil.github.io/requirements/
+[getcomposer]: https://getcomposer.org/
 [uninstall-mods]: https://getcomposer.org/doc/03-cli.md#remove
 
 # Mozg\CieloBraspagSdkPhp
@@ -13,25 +13,25 @@ SDK de integração a Cielo e Braspag
 
 ## Instalação - Atualização - Desinstalação
 
-Esta biblioteca destina-se a ser instalado usando o [Composer][composer].
+Esta biblioteca destina-se a ser instalado usando o [Composer][getcomposer].
 
-Autoloading é [PSR-4][psr4] compatível.
+Autoloading compatível é [PSR-4][psr4]
 
 --
 
-Para instalar o módulo execute o comando a seguir no terminal do seu servidor
+### Para instalar o módulo execute o comando a seguir no terminal do seu servidor
 
-    composer require mozgbrasil/cielo-braspag-sdk-php -vvv
+    composer require mozgbrasil/cielo-braspag-sdk-php
 
 -- 
 
-Para atualizar o módulo execute o comando a seguir no terminal do seu servidor
+### Para atualizar o módulo execute o comando a seguir no terminal do seu servidor
 
-    composer --version && sudo composer self-update && composer clear-cache && composer update && composer show -i
+    composer update
 
 --
 
-Para [desinstalar][uninstall-mods] o módulo execute o comando a seguir no terminal do seu servidor
+### Para [desinstalar][uninstall-mods] o módulo execute o comando a seguir no terminal do seu servidor
 
     composer remove mozgbrasil/cielo-braspag-sdk-php && composer clear-cache && composer update
 

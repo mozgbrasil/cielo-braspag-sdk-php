@@ -37,6 +37,11 @@ class ApiService
     protected $http;
 
     /**
+     * @var array
+     */
+    protected $debugData  = array();
+
+    /**
      * ApiService constructor.
      * @param array $options
      */
@@ -58,7 +63,6 @@ class ApiService
         $_array = $this->debugData;
 
         //\Zend\Debug\Debug::dump($_array);
-
     }
 
     /**
