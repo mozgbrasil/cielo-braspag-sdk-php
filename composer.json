@@ -24,7 +24,8 @@
         "wiki": "http://wiki.mozg.com.br",
         "irc": "irc://irc.freenode.org/mozgbrasil",
         "source": "https://github.com/mozgbrasil/cielo-braspag-sdk-php",
-        "docs": "https://github.com/mozgbrasil/cielo-braspag-sdk-php/wiki"
+        "docs": "https://github.com/mozgbrasil/cielo-braspag-sdk-php/wiki",
+        "rss": "https://mozg.com.br/feed.xml"
     },
     "require" : {
         "php": ">=5.3.0",
@@ -44,9 +45,6 @@
         "sjparkinson/static-review": "*",
         "friendsofphp/php-cs-fixer": "*",
         "lusitanian/oauth": "*"
-    },
-    "suggest": {
-        "phpunit/phpunit": "Biblioteca de testes"
     },
     "autoload": {
         "psr-4": {
