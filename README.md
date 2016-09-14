@@ -27,7 +27,7 @@ Autoloading compatível é [PSR-4][psr4]
 
 ### Para atualizar o módulo execute o comando a seguir no terminal do seu servidor
 
-    composer update
+    composer clear-cache && composer update
 
 --
 
