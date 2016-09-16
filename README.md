@@ -102,6 +102,8 @@ ou acesse http://onlinecurl.com/ e informe o comando
 
 Se trata de erro relacionado ao MerchantId e MerchantKey inválido
 
+Certifique se de analisar os dados de filiação e a URL
+
 Como as simulações acima estão funcionais você pode alterar somente o MerchantId e MerchantKey para testar se seus dados de filiação está retornando o processo de transação
 
 ## Badges
