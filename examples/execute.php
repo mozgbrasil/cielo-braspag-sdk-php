@@ -558,25 +558,7 @@ if (array_key_exists('Payment',$response)) {
 
 /*
 
-    curl --request POST "https://apisandbox.braspag.com.br/v2/sales/" --header "Content-Type: application/json" --header "MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0" --header "MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{  
-        "MerchantOrderId":"2014111703",
-        "Customer":{  
-            "Name":"Comprador Teste"     
-        },
-        "Payment":{  
-            "Type":"CreditCard",
-            "Amount":15700,
-            "Provider":"Simulado",
-            "Installments":1,
-            "CreditCard":{  
-                "CardNumber":"1234123412341231",
-                "Holder":"Teste Holder",
-                "ExpirationDate":"12/2021",
-                "SecurityCode":"123",
-                "Brand":"Visa"
-            }
-        }
-    }' --verbose
+curl --request POST "https://apisandbox.braspag.com.br/v2/sales/" --header "Content-Type: application/json" --header "MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0" --header "MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{ "MerchantOrderId":"2014111703", "Customer":{ "Name":"Comprador Teste" }, "Payment":{ "Type":"CreditCard", "Amount":15700, "Provider":"Cielo", "Installments":1, "CreditCard":{ "CardNumber":"1234123412341231", "Holder":"Teste Holder", "ExpirationDate":"12/2021", "SecurityCode":"123", "Brand":"Visa" } } }' --verbose
 
 
 curl --request POST "https://apisandbox.cieloecommerce.cielo.com.br/1/sales/" --header "Content-Type: application/json" --header "MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711" --header "MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data-binary '{  
