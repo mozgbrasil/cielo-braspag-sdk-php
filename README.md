@@ -98,9 +98,11 @@ ou acesse http://onlinecurl.com/ e informe o comando
 
     curl --data { "MerchantOrderId":"2014111706", "Customer": { "Name":"Comprador Teste" }, "Payment": { "Type":"EletronicTransfer", "Amount":15700, "Provider":"Bradesco", "ReturnUrl":"http://www.cielo.com.br" } } --header RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --header MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC --header MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711 --header Content-Type: application/json --request POST https://apisandbox.cieloecommerce.cielo.com.br/1/sales/
 
-### Sobre o retorno "Invalid Integration - 314"
+### Sobre o retorno "129 - Affiliation not found" ou "314 - Invalid Integration"
 
-Em meus testes vejo que o erro está relacionado ao MerchantId e MerchantKey inválido
+Se trata de erro relacionado ao MerchantId e MerchantKey inválido
+
+Como as simulações acima estão funcionais você pode alterar somente o MerchantId e MerchantKey para testar se seus dados de filiação está retornando o processo de transação
 
 ## Badges
 
