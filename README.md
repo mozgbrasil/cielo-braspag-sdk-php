@@ -45,13 +45,13 @@ https://cadastrosandbox.cieloecommerce.cielo.com.br/
 
 https://cadastrosandbox.braspag.com.br/
 
-#### Simulação de transação
+### Simulação de transação
 
-Braspag API (V2) - http://apidocs.braspag.com.br/
+Podemos executar o comando curl via terminal ou pelo seguinte serviço http://onlinecurl.com/
 
-Temos o devido retorno ao processar a seguinte requisição via terminal local
+### Braspag API (V2) - http://apidocs.braspag.com.br/
 
-    curl --request POST https://apisandbox.braspag.com.br/v2/sales/ --header "Content-Type: application/json" --header "MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0" --header "MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data '{  
+    curl --request POST https://apisandbox.braspag.com.br/v2/sales/ --header 'Content-Type: application/json' --header 'MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0' --header 'MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS' --header 'RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' --data '{  
         "MerchantOrderId":"2014111703",
         "Customer":{  
             "Name":"Comprador Teste"     
@@ -71,15 +71,9 @@ Temos o devido retorno ao processar a seguinte requisição via terminal local
         }
     }' --verbose
 
-ou acesse http://onlinecurl.com/ e informe o comando
+### Cielo API 3.0 - https://developercielo.github.io/Webservice-3.0/
 
-    curl --data { "MerchantOrderId":"2014111703", "Customer":{ "Name":"Comprador Teste" }, "Payment":{ "Type":"CreditCard", "Amount":15700, "Provider":"Simulado", "Installments":1, "CreditCard":{ "CardNumber":"1234123412341231", "Holder":"Teste Holder", "ExpirationDate":"12/2021", "SecurityCode":"123", "Brand":"Visa" } } } --header RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --header MerchantKey: VJGOUODUJMCLCDAVPIBSSAPMWCTQVQBTHOXRUZFS --header MerchantId: 1985000c-22f7-4429-9a92-fa5cb27de0e0 --header Content-Type: application/json --request POST https://apisandbox.braspag.com.br/v2/sales/
-
-Cielo API 3.0 - https://developercielo.github.io/Webservice-3.0/
-
-Temos o devido retorno ao processar a seguinte requisição via terminal local
-
-    curl --request POST https://apisandbox.cieloecommerce.cielo.com.br/1/sales/ --header "Content-Type: application/json" --header "MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711" --header "MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC" --header "RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" --data '{  
+    curl --request POST https://apisandbox.cieloecommerce.cielo.com.br/1/sales/ --header 'Content-Type: application/json' --header 'MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711' --header 'MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC' --header 'RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' --data '{  
         "MerchantOrderId":"2014111706",
         "Customer":
         {  
@@ -93,10 +87,6 @@ Temos o devido retorno ao processar a seguinte requisição via terminal local
             "ReturnUrl":"http://www.cielo.com.br"
         }
     }' --verbose
-
-ou acesse http://onlinecurl.com/ e informe o comando
-
-    curl --data { "MerchantOrderId":"2014111706", "Customer": { "Name":"Comprador Teste" }, "Payment": { "Type":"EletronicTransfer", "Amount":15700, "Provider":"Bradesco", "ReturnUrl":"http://www.cielo.com.br" } } --header RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --header MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC --header MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711 --header Content-Type: application/json --request POST https://apisandbox.cieloecommerce.cielo.com.br/1/sales/
 
 ### Sobre o retorno "129 - Affiliation not found" ou "314 - Invalid Integration"
 
