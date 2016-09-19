@@ -105,6 +105,5 @@ Como as simulações acima estão funcionais você pode alterar somente o Mercha
 [![License](https://poser.pugx.org/mozgbrasil/cielo-braspag-sdk-php/license)](https://packagist.org/packages/mozgbrasil/cielo-braspag-sdk-php)
 [![Monthly Downloads](https://poser.pugx.org/mozgbrasil/cielo-braspag-sdk-php/d/monthly)](https://packagist.org/packages/mozgbrasil/cielo-braspag-sdk-php)
 [![Daily Downloads](https://poser.pugx.org/mozgbrasil/cielo-braspag-sdk-php/d/daily)](https://packagist.org/packages/mozgbrasil/cielo-braspag-sdk-php)
-[![Build Status](https://travis-ci.org/mozgbrasil/cielo-braspag-sdk-php.svg?branch=master)](https://travis-ci.org/mozgbrasil/cielo-braspag-sdk-php)
 
 :cat2:
