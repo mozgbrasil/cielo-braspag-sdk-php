@@ -107,5 +107,10 @@ Como as simulações acima estão funcionais você pode alterar somente o Mercha
 [![Daily Downloads](https://poser.pugx.org/mozgbrasil/cielo-braspag-sdk-php/d/daily)](https://packagist.org/packages/mozgbrasil/cielo-braspag-sdk-php)
 [![Reference Status](https://www.versioneye.com/php/mozgbrasil:cielo-braspag-sdk-php/reference_badge.svg?style=flat-square)](https://www.versioneye.com/php/mozgbrasil:cielo-braspag-sdk-php/references)
 [![Dependency Status](https://www.versioneye.com/php/mozgbrasil:cielo-braspag-sdk-php/1.0.0/badge?style=flat-square)](https://www.versioneye.com/php/mozgbrasil:cielo-braspag-sdk-php/1.0.0)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/build-status/master)
+[![Code Climate](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php/badges/gpa.svg)](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php)
+[![Test Coverage](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php/badges/coverage.svg)](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php/coverage)
 
 :cat2:
