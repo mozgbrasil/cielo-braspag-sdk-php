@@ -112,5 +112,6 @@ Como as simulações acima estão funcionais você pode alterar somente o Mercha
 [![Build Status](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mozgbrasil/cielo-braspag-sdk-php/build-status/master)
 [![Code Climate](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php/badges/gpa.svg)](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php)
 [![Test Coverage](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php/badges/coverage.svg)](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php/coverage)
+[![Issue Count](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php/badges/issue_count.svg)](https://codeclimate.com/github/mozgbrasil/cielo-braspag-sdk-php)
 
 :cat2:
