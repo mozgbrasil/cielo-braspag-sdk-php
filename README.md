@@ -75,18 +75,23 @@ Podemos executar o comando curl via terminal ou pelo seguinte serviço http://on
 ### Cielo API 3.0 - https://developercielo.github.io/Webservice-3.0/
 
     curl --request POST https://apisandbox.cieloecommerce.cielo.com.br/1/sales/ --header 'Content-Type: application/json' --header 'MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711' --header 'MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC' --header 'RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' --data '{  
-        "MerchantOrderId":"2014111706",
-        "Customer":
-        {  
-            "Name":"Comprador Teste"
-        },
-        "Payment":
-        {  
-            "Type":"EletronicTransfer",
-            "Amount":15700,
-            "Provider":"Bradesco",
-            "ReturnUrl":"http://www.cielo.com.br"
-        }
+       "MerchantOrderId":"2014111703",
+       "Customer":{  
+          "Name":"Comprador crédito simples"
+       },
+       "Payment":{  
+         "Type":"CreditCard",
+         "Amount":15700,
+         "Installments":1,
+         "SoftDescriptor":"123456789ABCD",
+         "CreditCard":{  
+             "CardNumber":"4551870000000183",
+             "Holder":"Teste Holder",
+             "ExpirationDate":"12/2030",
+             "SecurityCode":"123",
+             "Brand":"Visa"
+         }
+       }
     }' --verbose
 
 ### Sobre o retorno "129 - Affiliation not found" ou "314 - Invalid Integration"
