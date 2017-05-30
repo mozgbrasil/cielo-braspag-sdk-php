@@ -74,7 +74,13 @@ Podemos executar o comando curl via terminal ou pelo seguinte serviço http://on
 
 ### Cielo API 3.0 - https://developercielo.github.io/Webservice-3.0/
 
-    curl --request POST https://apisandbox.cieloecommerce.cielo.com.br/1/sales/ --header 'Content-Type: application/json' --header 'MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711' --header 'MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC' --header 'RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' --data '{  
+    curl \
+    --request POST https://apisandbox.cieloecommerce.cielo.com.br/1/sales/ \
+    --header 'Content-Type: application/json' \
+    --header 'MerchantId: a2133427-a0f8-4fe8-b605-6469161e7711' \
+    --header 'MerchantKey: XUMUBMGQBPNUAYIESMSHTCNLVTNEXIDPHXQRZYOC' \
+    --header 'RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' \
+    --data '{  
        "MerchantOrderId":"2014111703",
        "Customer":{  
           "Name":"Comprador crédito simples"
